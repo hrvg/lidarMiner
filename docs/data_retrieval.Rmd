@@ -1,0 +1,46 @@
+---
+title: "Retrieving Lidar Data"
+author: 
+- name: Hervé Guillon
+  affiliation: University of California, Davis
+date: "`r format(Sys.time(), '%d %B %Y')`"  
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+
+Most of the elevation data are hosted by the USGS on the [Rocky FTP](rockyftp.cr.usgs.gov:/vdelivery/Datasets/Staged/Elevation/1m/Projects).
+Here, each project, and sometimes work packages within a project, is hosted in its own folder with three subfolders:
+
+- `TIFF` which contains the actual tiles of the dataset as large `.tif` files;
+- `browse` which contains `.jpg` previews for internet browsing platforms like [The National Map](https://viewer.nationalmap.gov/basic/);
+- `metadata` which contains metadata for each tile as light-weight `.xml` files. 
+
+These metadata files can be mined with the following commands, here for California, as indicated by `CA`:
+
+1. `lftp rockyftp.cr.usgs.gov:/vdelivery/Datasets/Staged/Elevation/1m/Projects`
+2. `mirror --no-empty-dirs -n . . -i "(_CA_).*(xml)$"`
+
+```{r}
+source("../R/lidar_bounding_box.R")
+list_files <- list_lidar_files()
+lidar_df <- get_lidar_df(list_files)
+lidar_bbox <- get_lidar_bbox(lidar_df)
+load("../classification/R/utils/shinyApp_lidar/data/regions.rda")
+load("../classification/R/utils/shinyApp_lidar/data/pts.rda")
+regions <- regions[regions$Region == "NCC", ]
+pts <- pts[pts$region == "NCC", ]
+pts_polygons <- buffer(pts, width = sqrt(2) * 250, dissolve = FALSE)
+regions <- sp::spTransform(regions, raster::crs(lidar_bbox))
+pts <- sp::spTransform(pts, raster::crs(lidar_bbox))
+pts_polygons <- sp::spTransform(pts_polygons, raster::crs(lidar_bbox))
+lidar_bbox <- intersect(lidar_bbox, regions)
+lidar_pts <- intersect(lidar_bbox, pts_polygons)
+unique_networkr <- unique(lidar_pts$networkr)
+plot(lidar_bbox)
+plot(lidar_bbox[lidar_bbox$networkr %in% unique_networkr, ], col = "green", add = TRUE)
+plot(pts, add = TRUE)
+```
