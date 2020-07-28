@@ -1,12 +1,12 @@
 Package: lidarMiner
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Version: 0.1
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Hervé",
+           family = "Guillon",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "herve@guillon.xyz",
+           comment = c(ORCID = "0000-0002-6297-8253"))
 Description: This package extracts the metadata from the USGS Rocky FTP, and based on a shapefile identifies the relevant DEM tiles for a problem defined by a shapefile.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -23,5 +23,6 @@ Imports:
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown.
+    pkgdown
 VignetteBuilder: knitr

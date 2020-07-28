@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_lidar_files.R
 \name{list_lidar_files}
 \alias{list_lidar_files}
-\title{Provide a list of all lidar files in a given dir}
+\title{Provides a list of all lidar files in a given dir}
 \usage{
 list_lidar_files(dir = "./data/")
 }
@@ -10,8 +10,8 @@ list_lidar_files(dir = "./data/")
 \item{dir}{file.path}
 }
 \value{
-list of files in dir
+A list of files in dir
 }
 \description{
-Provide a list of all lidar files in a given dir
+Provides a list of all lidar files in a given dir
 }

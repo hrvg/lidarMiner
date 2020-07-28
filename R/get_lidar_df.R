@@ -1,6 +1,6 @@
-#' This function extracts the bounding box for each xml files in a list of files
+#' Extracts the bounding box for each xml files in a list of files
 #' @param files_list a list of file.path
-#' @return a data.frame with columns name, networkr, westbc, eastbc, northbc, southbc
+#' @return A data.frame with columns name, networkr, westbc, eastbc, northbc, southbc
 #' @importFrom magrittr %>%
 #' @import foreach
 #' @export

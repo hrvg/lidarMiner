@@ -17,13 +17,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Purpose
-
-Lidar datasets provide topography at high resolution, usually 1-3 meters.
-With this increased resolution comes a data management challenge as downloading these datasets is somewhat cumbersome.
-In addition, for use at specific locations only, the entire dataset might not be required, only the data nearby the spatial footprint of the studied objects.
-The `lidarMiner` package addresses this issues by mining the metadata available from USGS to return the URLs of selected lidar tiles.
-
 # Mining metadata from Rocky FTP
 
 Most of the elevation data for the United States are hosted by the USGS on the [Rocky FTP](rockyftp.cr.usgs.gov:/vdelivery/Datasets/Staged/Elevation/1m/Projects).

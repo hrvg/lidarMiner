@@ -1,6 +1,6 @@
-#' This function extract a SpatialPolygon data.frame from the lidar data.frame
-#' @param lidar_df a data.frame with columns name, networkr, westbc, eastbc, northbc, southbc
-#' @return a SpatialPolygon data.frame
+#' Extract a SpatialPolygon data.frame from the lidar data.frame.
+#' @param lidar_df A data.frame with columns name, networkr, westbc, eastbc, northbc, southbc
+#' @return A SpatialPolygonsDataFrame
 #' @importFrom magrittr %>%
 #' @export
 get_lidar_bbox <- function(lidar_df){

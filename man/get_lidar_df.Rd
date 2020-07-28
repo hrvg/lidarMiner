@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_lidar_df.R
 \name{get_lidar_df}
 \alias{get_lidar_df}
-\title{This function extracts the bounding box for each xml files in a list of files}
+\title{Extracts the bounding box for each xml files in a list of files}
 \usage{
 get_lidar_df(files_list)
 }
@@ -10,8 +10,8 @@ get_lidar_df(files_list)
 \item{files_list}{a list of file.path}
 }
 \value{
-a data.frame with columns name, networkr, westbc, eastbc, northbc, southbc
+A data.frame with columns name, networkr, westbc, eastbc, northbc, southbc
 }
 \description{
-This function extracts the bounding box for each xml files in a list of files
+Extracts the bounding box for each xml files in a list of files
 }

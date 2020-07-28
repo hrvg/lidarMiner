@@ -2,16 +2,16 @@
 % Please edit documentation in R/get_lidar_bbox.R
 \name{get_lidar_bbox}
 \alias{get_lidar_bbox}
-\title{This function extract a SpatialPolygon data.frame from the lidar data.frame}
+\title{Extract a SpatialPolygon data.frame from the lidar data.frame.}
 \usage{
 get_lidar_bbox(lidar_df)
 }
 \arguments{
-\item{lidar_df}{a data.frame with columns name, networkr, westbc, eastbc, northbc, southbc}
+\item{lidar_df}{A data.frame with columns name, networkr, westbc, eastbc, northbc, southbc}
 }
 \value{
-a SpatialPolygon data.frame
+A SpatialPolygonsDataFrame
 }
 \description{
-This function extract a SpatialPolygon data.frame from the lidar data.frame
+Extract a SpatialPolygon data.frame from the lidar data.frame.
 }
