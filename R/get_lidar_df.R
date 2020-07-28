@@ -1,6 +1,9 @@
 #' This function extracts the bounding box for each xml files in a list of files
 #' @param files_list a list of file.path
 #' @return a data.frame with columns name, networkr, westbc, eastbc, northbc, southbc
+#' @importFrom magrittr %>%
+#' @import foreach
+#' @export
 get_lidar_df <- function(files_list){
 	lidar_df <- foreach(f = files_list, .combine = rbind) %do% {
 		x <- xml2::read_xml(f)

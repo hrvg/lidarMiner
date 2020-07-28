@@ -1,0 +1,114 @@
+---
+title: "Getting started with `lidarMiner`"
+author: 
+- name: Hervé Guillon
+date: "`r format(Sys.time(), '%d %B %Y')`" 
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Purpose
+
+Lidar datasets provide topography at high resolution, usually 1-3 meters.
+With this increased resolution comes a data management challenge as downloading these datasets is somewhat cumbersome.
+In addition, for use at specific locations only, the entire dataset might not be required, only the data nearby the spatial footprint of the studied objects.
+The `lidarMiner` package addresses this issues by mining the metadata available from USGS to return the URLs of selected lidar tiles.
+
+# Mining metadata from Rocky FTP
+
+Most of the elevation data for the United States are hosted by the USGS on the [Rocky FTP](rockyftp.cr.usgs.gov:/vdelivery/Datasets/Staged/Elevation/1m/Projects).
+Here, each project (and sometimes work packages within a project) is hosted in its own folder with three subfolders:
+
+- `TIFF` which contains the actual tiles of the dataset as large `.tif` files;
+- `browse` which contains `.jpg` previews for internet browsing platforms like [The National Map](https://viewer.nationalmap.gov/basic/);
+- `metadata` which contains metadata for each tile as light-weight `.xml` files. 
+
+These metadata files can be mined with the following  commands, here for California, as indicated by `CA`:
+
+1. Calling `mkdir data` at the root of the repository will create the `/data` folder
+1. `cd data` will change to `data/`
+1. `lftp rockyftp.cr.usgs.gov:/vdelivery/Datasets/Staged/Elevation/1m/Projects` connects to Rocky FTP
+1. `mirror --no-empty-dirs -n . . -i "(_CA_).*(xml)$"` downloads the files matching the regular expression `"(_CA_).*(xml)$"`.
+	+ You can kill this command once it has run past the state of interest.
+	+ It takes around 20 min to download all the metadata for California.
+
+# Setup
+
+For the rest of this example, we will use the packages: `lidarMiner` and `raster` (which loads `sp`).
+
+```{r setup}
+library(lidarMiner)
+library(raster)
+```
+
+# Executing `lidarMiner` functions
+
+This chunk executes all functions from `lidarMiner`, listing the files at a specified path, reading the `.xml` files and extracting the spatial information into a `SpatialPolygonsDataFrame`.
+If you want to test this chunk without downloading any files, use `"../inst/testdata/"` instead of `"../data/"`.
+
+```{r executing lidarMiner functions, fig.width = 6, fig.height = 6}
+list_files <- list_lidar_files("../data/")
+lidar_df <- get_lidar_df(list_files)
+lidar_bbox <- get_lidar_bbox(lidar_df)
+plot(lidar_bbox)
+```
+
+# Leveraging the bounding box of the lidar datasets to select the target tiles
+
+First, let's load a `region_boundary` shapefile and a `sampling_locations` shapefile.
+The first describes the boundary of an area of interest, here the North Central Coast of California, USA.
+The second holds the locations of points of interest within the region, here field location of channel morphology sampling.
+
+
+```{r loading test data, fig.width = 6, fig.height = 6}
+region_boundary <- shapefile(system.file("extdata", "region_boundary.shp", package = "lidarMiner"))
+sampling_locations <- shapefile(system.file("extdata", "sampling_locations.shp", package = "lidarMiner"))
+plot(region_boundary)
+plot(sampling_locations, add = TRUE)
+```
+
+It might be useful to add some buffering around the point if you know how you will use the lidar datasets.
+For example, as I know that I will search for topographical information in squared tile $500\times500$-m, I add a circular buffer of $\sqrt{2}\cdot 250$-m around each location.
+This ensures that I capture enough lidar data to proceed with my downstream analysis. 
+
+```{r adding some buffer}
+sampling_locations_polygons <- buffer(sampling_locations, width = sqrt(2) * 250, dissolve = FALSE)
+```
+
+Because the `sampling_locations` and `region_boundary` do not share the same CRS as `lidar_bbox`, this chunk handles some CRS conversions with `spTransform`.
+
+```{r handling crs conversion}
+region_boundary <- spTransform(region_boundary, crs(lidar_bbox))
+sampling_locations <- spTransform(sampling_locations, crs(lidar_bbox))
+sampling_locations_polygons <- spTransform(sampling_locations_polygons, crs(lidar_bbox))
+```
+
+We are now ready to perform a spatial intersect.
+We perform a spatial intersect with the region boundary to speed up the subsequent intersect with the sample locations.
+
+
+```{r spatial intersect, warning = FALSE, fig.width = 6, fig.height = 6}
+lidar_bbox <- intersect(lidar_bbox, region_boundary)
+lidar_sampling_locations <- intersect(lidar_bbox, sampling_locations_polygons)
+unique_networkr <- as.character(unique(lidar_sampling_locations$networkr))
+plot(lidar_bbox)
+plot(lidar_bbox[lidar_bbox$networkr %in% unique_networkr, ], col = "green", add = TRUE)
+plot(sampling_locations_polygons, add = TRUE)
+```
+
+You can note that in the center of the region, two tiles have been selected thanks to the buffering.
+
+Finally, the `networkr` field of the resulting `lidar_sampling_locations` holds the URLs of the tiles we need.
+```{r displaying urls}
+head(unique_networkr)
+```
