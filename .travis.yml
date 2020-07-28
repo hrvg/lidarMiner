@@ -1,4 +1,6 @@
-language: r
+language: r 
+r: 
+  - 3.6.1
 cache: packages
 
 after_success:
