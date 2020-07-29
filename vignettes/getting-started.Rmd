@@ -50,7 +50,7 @@ This chunk executes all functions from `lidarMiner`, listing the files at a spec
 If you want to test this chunk without downloading any files, use `"../inst/testdata/"` instead of `"../data/"`.
 
 ```{r executing lidarMiner functions, fig.width = 6, fig.height = 6}
-list_files <- list_lidar_files("../data/")
+list_files <- list_lidar_files("../inst/testdata/")
 lidar_df <- get_lidar_df(list_files)
 lidar_bbox <- get_lidar_bbox(lidar_df)
 plot(lidar_bbox)
