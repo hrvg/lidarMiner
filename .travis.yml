@@ -3,6 +3,11 @@ r:
   - 3.6.1
 cache: packages
 
+before_install:
+  - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+  - sudo apt-get update
+  - sudo apt-get install libgdal-dev libgeos-dev libproj-dev 
+
 after_success:
   - Rscript -e 'pkgdown::build_site()'
 
