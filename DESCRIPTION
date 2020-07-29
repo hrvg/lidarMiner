@@ -18,7 +18,7 @@ Imports:
 	foreach,
 	magrittr,
 	raster,
-	rdgal,
+	rgdal,
 	rgeos,
 	sp,
 	xml2
