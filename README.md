@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/hrvg/lidarMiner.svg?token=Dx1gYTrTiuxgW9Sq3s3q&branch=master)](https://travis-ci.com/hrvg/lidarMiner)
+
 # `lidarMiner`
 
 ## Purpose
