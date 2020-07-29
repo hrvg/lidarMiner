@@ -47,10 +47,10 @@ library(raster)
 # Executing `lidarMiner` functions
 
 This chunk executes all functions from `lidarMiner`, listing the files at a specified path, reading the `.xml` files and extracting the spatial information into a `SpatialPolygonsDataFrame`.
-If you want to test this chunk without downloading any files, use `"../inst/testdata/"` instead of `"../data/"`.
+The files required files are included with the package and stored in `/inst/extdata` that we access with `system.file`.
 
 ```{r executing lidarMiner functions, fig.width = 6, fig.height = 6}
-list_files <- list_lidar_files("../inst/testdata/")
+list_files <- list_lidar_files(system.file("extdata", package = "lidarMiner"))
 lidar_df <- get_lidar_df(list_files)
 lidar_bbox <- get_lidar_bbox(lidar_df)
 plot(lidar_bbox)

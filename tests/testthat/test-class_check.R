@@ -1,6 +1,6 @@
 context("Checking class")
 
-files_list <- list_lidar_files("../../inst/testdata")
+files_list <- list_lidar_files(system.file("extdata", package = "lidarMiner"))
 test_that("files_list is a list of character", {
   expect_is(files_list, "character")
 })
