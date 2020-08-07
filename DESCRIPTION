@@ -1,5 +1,5 @@
 Package: lidarMiner
-Title: What the Package Does (One Line, Title Case)
+Title: Idenfitying lidar tiles for easy data retrieval
 Version: 0.1
 Authors@R: 
     person(given = "Hervé",
