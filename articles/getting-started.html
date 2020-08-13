@@ -76,7 +76,7 @@
 </h1>
                         <h4 class="author">Hervé Guillon</h4>
                         
-            <h4 class="date">07 August 2020</h4>
+            <h4 class="date">13 August 2020</h4>
       
       
       <div class="hidden name"><code>getting-started.Rmd</code></div>
@@ -165,6 +165,8 @@
 <span class="co">#&gt; [4] "ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/Elevation/1m/Projects/CA_FEMA_R9_Mendocino_HF_2017/TIFF/USGS_one_meter_x45y434_CA_FEMA_R9_Mendocino_HF_2017.tif"</span>
 <span class="co">#&gt; [5] "ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/Elevation/1m/Projects/CA_FEMA_R9_Mendocino_HF_2017/TIFF/USGS_one_meter_x45y437_CA_FEMA_R9_Mendocino_HF_2017.tif"</span>
 <span class="co">#&gt; [6] "ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/Elevation/1m/Projects/CA_FEMA_R9_Mendocino_HF_2017/TIFF/USGS_one_meter_x46y431_CA_FEMA_R9_Mendocino_HF_2017.tif"</span></pre></body></html></div>
+<p>We can use the <code>curl</code> package to download all the files.</p>
+<pre><code>for (url in unique_networkr) curl::curl_download(url, file.path("/media/hguillon/UCD eFlow BigData1/", basename(url)))</code></pre>
 </div>
   </div>
 
