@@ -105,3 +105,9 @@ Finally, the `networkr` field of the resulting `lidar_sampling_locations` holds 
 ```{r displaying urls}
 head(unique_networkr)
 ```
+
+We can use the `curl` package to download all the files.
+
+```
+for (url in unique_networkr) curl::curl_download(url, file.path("/media/hguillon/UCD eFlow BigData1/", basename(url)))
+ ```
