@@ -44,19 +44,10 @@
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../articles/lidarMiner.html">Get started</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/getting-started.html">Getting started with `lidarMiner`</a>
-    </li>
-  </ul>
+  <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -76,10 +67,10 @@
 </h1>
                         <h4 class="author">Hervé Guillon</h4>
                         
-            <h4 class="date">13 August 2020</h4>
+            <h4 class="date">14 August 2020</h4>
       
       
-      <div class="hidden name"><code>getting-started.Rmd</code></div>
+      <div class="hidden name"><code>lidarMiner.Rmd</code></div>
 
     </div>
 
@@ -130,7 +121,7 @@
 <span class="no">lidar_df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lidarMiner/man/get_lidar_df.html">get_lidar_df</a></span>(<span class="no">list_files</span>)
 <span class="no">lidar_bbox</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lidarMiner/man/get_lidar_bbox.html">get_lidar_bbox</a></span>(<span class="no">lidar_df</span>)
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(<span class="no">lidar_bbox</span>)</pre></body></html></div>
-<p><img src="getting-started_files/figure-html/executing%20lidarMiner%20functions-1.png" width="576"></p>
+<p><img src="lidarMiner_files/figure-html/executing%20lidarMiner%20functions-1.png" width="576"></p>
 </div>
 <div id="leveraging-the-bounding-box-of-the-lidar-datasets-to-select-the-target-tiles" class="section level1">
 <h1 class="hasAnchor">
@@ -140,7 +131,7 @@
 <span class="no">sampling_locations</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/shapefile.html">shapefile</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"sampling_locations.shp"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"lidarMiner"</span>))
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(<span class="no">region_boundary</span>)
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(<span class="no">sampling_locations</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<p><img src="getting-started_files/figure-html/loading%20test%20data-1.png" width="576"></p>
+<p><img src="lidarMiner_files/figure-html/loading%20test%20data-1.png" width="576"></p>
 <p>It might be useful to add some buffering around the point if you know how you will use the lidar datasets. For example, as I know that I will search for topographical information in squared tile <span class="math inline">\(500\times500\)</span>-m, I add a circular buffer of <span class="math inline">\(\sqrt{2}\cdot 250\)</span>-m around each location. This ensures that I capture enough lidar data to proceed with my downstream analysis.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">sampling_locations_polygons</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/buffer.html">buffer</a></span>(<span class="no">sampling_locations</span>, <span class="kw">width</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="fl">2</span>) * <span class="fl">250</span>, <span class="kw">dissolve</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
 <p>Because the <code>sampling_locations</code> and <code>region_boundary</code> do not share the same CRS as <code>lidar_bbox</code>, this chunk handles some CRS conversions with <code>spTransform</code>.</p>
@@ -155,7 +146,7 @@
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(<span class="no">lidar_bbox</span>)
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(<span class="no">lidar_bbox</span>[<span class="no">lidar_bbox</span>$<span class="no">networkr</span> <span class="kw">%in%</span> <span class="no">unique_networkr</span>, ], <span class="kw">col</span> <span class="kw">=</span> <span class="st">"green"</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(<span class="no">sampling_locations_polygons</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<p><img src="getting-started_files/figure-html/spatial%20intersect-1.png" width="576"></p>
+<p><img src="lidarMiner_files/figure-html/spatial%20intersect-1.png" width="576"></p>
 <p>You can note that in the center of the region, two tiles have been selected thanks to the buffering.</p>
 <p>Finally, the <code>networkr</code> field of the resulting <code>lidar_sampling_locations</code> holds the URLs of the tiles we need.</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/raster/man/headtail.html">head</a></span>(<span class="no">unique_networkr</span>)
