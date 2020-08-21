@@ -78,11 +78,17 @@
 <a href="#how-to-install" class="anchor"></a>How to install</h2>
 <pre><code># Install development version from GitHub
 devtools::install_github("hrvg/lidarMiner")</code></pre>
+<p>It is also likely you’ll need to install the latest <code>terra</code> or <code>raster</code> version which has dependencies on GDAL (&gt;= 3.0.0), GEOS (&gt;= 3.3.0) and Proj.4 (&gt;= 6.0.0).</p>
+<p>On Linux, you can do:</p>
+<pre><code>sudo add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable
+sudo apt-get -q update
+sudo apt-get -y install libgdal-dev libgeos-dev libproj-dev </code></pre>
+<p>The <code>terra</code> <a href="https://github.com/rspatial/terra">github page</a> has some insights for other operating systems.</p>
 </div>
 <div id="how-to-use" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-to-use" class="anchor"></a>How to use</h2>
-<p>Check out the <a href="articles/getting-started.html">package’s vignette to get started</a>.</p>
+<p>Check out the <a href="articles/lidarMiner.html">package’s vignette to get started</a>.</p>
 </div>
 </div>
 
