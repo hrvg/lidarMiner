@@ -67,7 +67,7 @@
 </h1>
                         <h4 class="author">Hervé Guillon</h4>
                         
-            <h4 class="date">21 August 2020</h4>
+            <h4 class="date">27 August 2020</h4>
       
       
       <div class="hidden name"><code>lidarMiner.Rmd</code></div>
@@ -158,6 +158,7 @@
 <span class="co">#&gt; [6] "ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/Elevation/1m/Projects/CA_FEMA_R9_Mendocino_HF_2017/TIFF/USGS_one_meter_x46y431_CA_FEMA_R9_Mendocino_HF_2017.tif"</span></pre></body></html></div>
 <p>We can use the <code>curl</code> package to download all the files.</p>
 <pre><code>for (url in unique_networkr) curl::curl_download(url, file.path("/media/hguillon/UCD eFlow BigData1/", basename(url)))</code></pre>
+<p>Finally, the function <code><a href="https://rdrr.io/pkg/lidarMiner/man/merge_lidar_rasters.html">merge_lidar_rasters()</a></code>, takes care of creating the mosaic of all the lidar files in a given folder.</p>
 </div>
   </div>
 
