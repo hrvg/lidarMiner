@@ -14,13 +14,14 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports:
-	dplyr,
-	foreach,
-	magrittr,
-	raster,
-	rgdal,
-	rgeos,
-	sp,
+  dplyr,
+  foreach,
+  magrittr,
+  raster,
+  rgdal,
+  rgeos,
+  sp,
+  gdalUtils,
 	xml2
 Suggests: 
     testthat,

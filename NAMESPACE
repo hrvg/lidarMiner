@@ -3,5 +3,6 @@
 export(get_lidar_bbox)
 export(get_lidar_df)
 export(list_lidar_files)
+export(merge_lidar_rasters)
 import(foreach)
 importFrom(magrittr,"%>%")
